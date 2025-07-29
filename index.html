@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Admin Login</title>
+  <style>
+    body {
+      background: linear-gradient(to right, #4e54c8, #8f94fb);
+      font-family: 'Segoe UI', sans-serif;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      margin: 0;
+      position: relative;
+    }
+
+    .login-card {
+      background: #fff;
+      padding: 30px 40px;
+      border-radius: 12px;
+      box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
+      width: 350px;
+      text-align: center;
+    }
+
+    .login-card h2 {
+      margin-bottom: 20px;
+      color: #333;
+    }
+
+    .login-card input {
+      width: 100%;
+      padding: 10px;
+      margin: 10px 0;
+      border: 1px solid #ccc;
+      border-radius: 8px;
+      font-size: 14px;
+    }
+
+    .login-card button {
+      width: 100%;
+      padding: 10px;
+      background-color: #4e54c8;
+      color: white;
+      font-weight: bold;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: background 0.3s;
+    }
+
+    .login-card button:hover {
+      background-color: #3b41b5;
+    }
+
+    pre {
+      text-align: left;
+      background: #f8f8f8;
+      padding: 15px;
+      border-radius: 8px;
+      margin-top: 20px;
+      white-space: pre-wrap;
+      font-size: 14px;
+    }
+
+    .note {
+      position: absolute;
+      bottom: 20px;
+      right: 20px;
+      background: rgba(255, 255, 255, 0.9);
+      padding: 10px 15px;
+      border-radius: 8px;
+      font-size: 13px;
+      color: #333;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    }
+  </style>
+</head>
+<body>
+
+  <div class="login-card">
+    <h2>Admin Login</h2>
+    <input type="text" id="username" placeholder="Username admin">
+    <input type="password" id="password" placeholder="Password">
+    <button onclick="login()">Login</button>
+    <pre id="logOutput"></pre>
+  </div>
+
+  <div class="note">
+    <strong>Correct Login:</strong><br>
+    Username: admin1<br>
+    Password: 1234
+  </div>
+
+  <script>
+    const adminList = [
+      { username: "admin1", password: "1234" }
+    ];
+
+    function login() {
+      const user = document.getElementById("username").value.trim();
+      const pass = document.getElementById("password").value.trim();
+      let log = "";
+
+      // Cek apakah form belum lengkap
+      if (!user) {
+        log = "Masukkan username terlebih dahulu.";
+      } else if (!pass) {
+        log = "Masukkan password terlebih dahulu.";
+      } else {
+        // Validasi: semua admin punya password minimal 3 karakter
+        const semuaValid = adminList.every(a => a.password.length >= 3);
+
+        if (!semuaValid) {
+          log = "Error: Ada admin yang memiliki password tidak valid.";
+        } else {
+          // Cek login
+          const admin = adminList.find(a => a.username === user && a.password === pass);
+          log = admin
+            ? `Login berhasil, Selamat datang ${admin.username}`
+            : "Login gagal, Username atau password salah!";
+        }
+      }
+
+      document.getElementById("logOutput").textContent = log;
+    }
+  </script>
+
+</body>
+</html>
